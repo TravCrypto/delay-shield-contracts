@@ -14,8 +14,6 @@ const latestFlightData = flightResponse.data;
 
 const flightData = {
   flightCode: latestFlightData.flight.iata,
-  delayOnArrival: latestFlightData.arrival.delay,
-  status: latestFlightData.flight_status,
 };
 
 return Functions.encodeString(JSON.stringify(flightData));
