@@ -6,7 +6,7 @@ import { abi } from "../out/DelayShield.sol/DelayShield.json";
 import { Location } from "@chainlink/functions-toolkit";
 import { signer } from "./helpers/connection";
 
-const consumerAddress = "0xc8e5398cF3DCE36bEA91035658ED3C4bb03BC090"; // TODO @dev get this from step 01
+const consumerAddress = "0x24721baf57C2d08dB4BF61e289BE5f8992FeebcA"; // TODO @dev get this from step 01
 const encryptedSecretsReference = ""; // TODO @dev get this from previous step
 const subscriptionId = "539"; // TODO @dev
 

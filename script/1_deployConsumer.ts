@@ -25,5 +25,3 @@ const deployedFunctionsConsumerContract = async () => {
 deployedFunctionsConsumerContract().catch((err: any) => {
   console.log("\nError deploying Functions Consumer contract: ", err);
 });
-
-// 0xf38e8be75e114e7e0d153d5a87c50274a0ea4db2

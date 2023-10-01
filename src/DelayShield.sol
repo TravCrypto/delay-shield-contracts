@@ -15,10 +15,14 @@ contract DelayShield is FunctionsClient {
     error InsufficientValue();
 
     mapping(bytes32 => uint256) public insuranceTimeRecord;
+    mapping(bytes32 => address) public reimbursement;
+
     string[] private args;
     bytes32 public s_lastRequestId;
     bytes public s_lastResponse;
     bytes public s_lastError;
+
+    bytes private FALSE_IN_BYTES;
 
     bytes32 public donId; // DON ID for the Functions DON to which the requests are sent
 
@@ -42,6 +46,7 @@ contract DelayShield is FunctionsClient {
         uint32 callbackGasLimit
     ) external {
         uint256 insuranceTime = insuranceTimeRecord[keccak256(abi.encode(insured, flightCode))];
+        delete insuranceTimeRecord[keccak256(abi.encode(insured, flightCode))];
 
         args.push(Strings.toString(insuranceTime));
         args.push(flightCode);
@@ -50,13 +55,20 @@ contract DelayShield is FunctionsClient {
         req.initializeRequestForInlineJavaScript(source);
         req.setArgs(args);
         delete args;
-        s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, callbackGasLimit, donId);
+
+        reimbursement[_sendRequest(req.encodeCBOR(), subscriptionId, callbackGasLimit, donId)] =
+            insured;
     }
 
     function fulfillRequest(bytes32 requestId, bytes memory response, bytes memory err)
         internal
         override
     {
+        bool isElegibleForReimbursement = abi.decode(response, (bool));
+        if (isElegibleForReimbursement) {
+            reimbursement[requestId].call{ value: 2e16 }("");
+        }
+
         s_lastResponse = response;
         s_lastError = err;
     }

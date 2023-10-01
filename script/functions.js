@@ -3,7 +3,10 @@ const insuranceFlightCode = args[1];
 
 const url =
   // "http://api.aviationstack.com/v1/flights?access_key=ae0f9a0a4e373646e027290f3609cc89&airline_iata=IB&flight_number=3009";
-  "https://mocki.io/v1/b0175427-e367-4995-9104-7d910e117c1d";
+  // Will return isInsurancePeriodValid false
+  // "https://mocki.io/v1/b0175427-e367-4995-9104-7d910e117c1d";
+  // Will return true
+  "https://mocki.io/v1/97266b37-f01c-43b0-83e0-a2f46d2384c7";
 
 const response = await Functions.makeHttpRequest({
   url: url,
@@ -33,6 +36,4 @@ console.log("isDelayRelevant: ", isDelayRelevant);
 const finalResult =
   isFlightInsured && isInsurancePeriodValid && isDelayRelevant;
 
-return Functions.encodeString(
-  `${isFlightInsured}-${isInsurancePeriodValid}-${isDelayRelevant}`
-);
+return Functions.encodeUint256(+finalResult);
