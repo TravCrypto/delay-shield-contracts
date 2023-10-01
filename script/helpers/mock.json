@@ -1,0 +1,63 @@
+{
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "count": 2,
+    "total": 2
+  },
+  "data": [
+    {
+      "flight_date": "2023-09-30",
+      "flight_status": "scheduled",
+      "departure": {
+        "airport": "Logan International",
+        "timezone": "America/New_York",
+        "iata": "BOS",
+        "icao": "KBOS",
+        "terminal": "C",
+        "gate": "C30",
+        "delay": 230,
+        "scheduled": "2023-09-30T12:45:00+00:00",
+        "estimated": "2023-09-30T12:45:00+00:00",
+        "actual": "2023-09-30T16:35:00+00:00",
+        "estimated_runway": "2023-09-30T16:35:00+00:00",
+        "actual_runway": "2023-09-30T16:35:00+00:00"
+      },
+      "arrival": {
+        "airport": "Fort Lauderdale–Hollywood International",
+        "timezone": "America/New_York",
+        "iata": "FLL",
+        "icao": "KFLL",
+        "terminal": "3",
+        "gate": "F9",
+        "baggage": "1",
+        "delay": 201,
+        "scheduled": "2023-09-30T16:09:00+00:00",
+        "estimated": "2023-09-30T16:09:00+00:00",
+        "actual": null,
+        "estimated_runway": null,
+        "actual_runway": null
+      },
+      "airline": {
+        "name": "Azul",
+        "iata": "AD",
+        "icao": "AZU"
+      },
+      "flight": {
+        "number": "7372",
+        "iata": "AD7372",
+        "icao": "AZU7372",
+        "codeshared": {
+          "airline_name": "jetblue airways",
+          "airline_iata": "b6",
+          "airline_icao": "jbu",
+          "flight_number": "2269",
+          "flight_iata": "b62269",
+          "flight_icao": "jbu2269"
+        }
+      },
+      "aircraft": null,
+      "live": null
+    }
+  ]
+}

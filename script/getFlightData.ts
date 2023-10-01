@@ -12,25 +12,24 @@ const main = async () => {
     .then((res) => res.data.data[0]);
 
   const flightData = {
-    flightCode: response.flight.iata,
+    code: response.flight.iata,
     delayOnArrival: response.arrival.delay,
+    scheduledDeparture: parseInt(
+      (new Date(response.departure.scheduled).getTime() / 1000).toFixed(0)
+    ),
   };
-  console.log(JSON.stringify(flightData));
-
-  const scheduledDeparture = parseInt(
-    (new Date(response.departure.scheduled).getTime() / 1000).toFixed(0)
-  );
 
   // Validate that is the insured flight
-  const isFlightInsured = insuranceFlightCode == response.flight.iata;
+  const isFlightInsured = insuranceFlightCode == flightData.code;
   console.log("isFlightInsured: ", isFlightInsured);
 
   // Validate that the user bought the ticket at least 1 day before the scheduled departure
-  const isInsurancePeriodValid = scheduledDeparture - insuranceBuyTime > 86400;
+  const isInsurancePeriodValid =
+    flightData.scheduledDeparture - insuranceBuyTime > 86400;
   console.log("isInsurancePeriodValid: ", isInsurancePeriodValid);
 
   // Validate delayed time to be elegible for issuance
-  const isDelayRelevant = response.arrival.delay > 120;
+  const isDelayRelevant = flightData.delayOnArrival > 120;
   console.log("isDelayRelevant: ", isDelayRelevant);
 
   const finalResult =

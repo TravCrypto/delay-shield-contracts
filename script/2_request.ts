@@ -29,7 +29,7 @@ const sendRequest = async () => {
     source, // source
     Location.DONHosted, // location of the secrets
     encodeBytes32String(""),
-    [],
+    ["1695023922", "AD7372"],
     [], // bytesArgs - arguments can be encoded off-chain to bytes.
     subscriptionId,
     callbackGasLimit,
@@ -39,10 +39,6 @@ const sendRequest = async () => {
   const requestTxReceipt = await requestTx.wait(1);
 
   console.log(requestTxReceipt);
-
-  const requestId = requestTxReceipt.events[2].args.id;
-
-  console.log("\nRequest made. RequestId is: ", requestId);
 };
 
 sendRequest().catch((err: any) => {

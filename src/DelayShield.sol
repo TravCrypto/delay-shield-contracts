@@ -9,6 +9,11 @@ contract DelayShield is FunctionsClient {
     using FunctionsRequest for FunctionsRequest.Request;
 
     // TODO: immutable source for javascript function
+    event InsuranceBought(address indexed insured, string flightCode);
+
+    error InsufficientValue();
+
+    mapping(bytes32 => uint256) public insuranceTimeRecord;
 
     bytes32 public s_lastRequestId;
     bytes public s_lastResponse;
@@ -20,17 +25,26 @@ contract DelayShield is FunctionsClient {
         donId = _donId;
     }
 
-    function sendRequest(
+    function buyInsurance(string memory flightCode) external payable {
+        if (msg.value != 0.1 ether) revert InsufficientValue();
+
+        insuranceTimeRecord[keccak256(abi.encode(msg.sender, flightCode))] = block.timestamp;
+
+        emit InsuranceBought(msg.sender, flightCode);
+    }
+
+    function claimInsurance(
         string calldata source,
-        FunctionsRequest.Location secretsLocation,
-        bytes calldata encryptedSecretsReference,
-        string[] calldata args,
-        bytes[] calldata bytesArgs,
+        address insured,
+        string calldata flightCode,
         uint64 subscriptionId,
         uint32 callbackGasLimit
     ) external {
+        uint256 insuranceTime = insuranceTimeRecord[keccak256(abi.encode(insured, flightCode))];
+
         FunctionsRequest.Request memory req;
         req.initializeRequestForInlineJavaScript(source);
+        req.setArgs([string(insuranceTime), flightCode]);
         s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, callbackGasLimit, donId);
     }
 
