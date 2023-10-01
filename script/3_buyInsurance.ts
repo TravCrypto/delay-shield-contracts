@@ -3,11 +3,11 @@ import { Contract, ethers } from "ethers";
 import { abi } from "../out/DelayShield.sol/DelayShield.json";
 import { signer } from "./helpers/connection";
 
-const consumerAddress = "0x24721baf57C2d08dB4BF61e289BE5f8992FeebcA"; // TODO @dev get this from step 01
+const { CONSUMER_ADDRESS } = process.env;
 
 const buyInsurance = async () => {
   // Attach to the FunctionsConsumer contract
-  const functionsConsumer = new Contract(consumerAddress, abi, signer);
+  const functionsConsumer = new Contract(CONSUMER_ADDRESS!, abi, signer);
   // get the request ID by simulating a Tx with a static call
   const requestTx = await functionsConsumer.buyInsurance("AD7372", {
     value: ethers.parseUnits("0.01", "ether"),

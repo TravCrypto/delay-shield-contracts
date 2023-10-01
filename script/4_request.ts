@@ -1,22 +1,16 @@
-import { Contract, encodeBytes32String } from "ethers";
+import { Contract } from "ethers";
 import fs from "fs";
 import path from "path";
 
 import { abi } from "../out/DelayShield.sol/DelayShield.json";
-import { Location } from "@chainlink/functions-toolkit";
 import { signer } from "./helpers/connection";
 
-const consumerAddress = "0x24721baf57C2d08dB4BF61e289BE5f8992FeebcA"; // TODO @dev get this from step 01
-const encryptedSecretsReference = ""; // TODO @dev get this from previous step
+const { CONSUMER_ADDRESS } = process.env;
 const subscriptionId = "539"; // TODO @dev
 
 const sendRequest = async () => {
-  if (!consumerAddress || !subscriptionId) {
-    throw new Error("Please set the variables in script 04");
-  }
-
   // Attach to the FunctionsConsumer contract
-  const functionsConsumer = new Contract(consumerAddress, abi, signer);
+  const functionsConsumer = new Contract(CONSUMER_ADDRESS!, abi, signer);
 
   const source = fs
     .readFileSync(path.resolve(__dirname, "./functions.js"))
@@ -26,9 +20,9 @@ const sendRequest = async () => {
 
   // get the request ID by simulating a Tx with a static call
   const requestTx = await functionsConsumer.claimInsurance(
-    source, // source
-    "0x2a4fc9c5ec629d872f82d29fae5dfa71b39b7e28",
-    "AD7372", // bytesArgs - arguments can be encoded off-chain to bytes.
+    source,
+    signer.address,
+    "AD7372", // flight code
     subscriptionId,
     callbackGasLimit,
     { gasPrice: 8000000000, gasLimit: 2100000 }

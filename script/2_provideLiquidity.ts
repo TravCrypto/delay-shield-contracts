@@ -1,9 +1,11 @@
 import { ethers } from "ethers";
 import { signer } from "./helpers/connection";
 
+const { CONSUMER_ADDRESS } = process.env;
+
 const sendEther = async () => {
   const tx = await signer.sendTransaction({
-    to: "0x24721baf57C2d08dB4BF61e289BE5f8992FeebcA",
+    to: CONSUMER_ADDRESS,
     value: ethers.parseUnits("0.02", "ether"),
   });
 
