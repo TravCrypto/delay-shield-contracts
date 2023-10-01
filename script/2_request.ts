@@ -8,7 +8,7 @@ import { signer } from "./helpers/connection";
 
 const consumerAddress = "0xf38e8be75e114e7e0d153d5a87c50274a0ea4db2"; // TODO @dev get this from step 01
 const encryptedSecretsReference = ""; // TODO @dev get this from previous step
-const subscriptionId = "355"; // TODO @dev
+const subscriptionId = "539"; // TODO @dev
 
 const sendRequest = async () => {
   if (!consumerAddress || !subscriptionId) {
@@ -32,7 +32,8 @@ const sendRequest = async () => {
     [],
     [], // bytesArgs - arguments can be encoded off-chain to bytes.
     subscriptionId,
-    callbackGasLimit
+    callbackGasLimit,
+    { gasPrice: 8000000000, gasLimit: 2100000 }
   );
 
   const requestTxReceipt = await requestTx.wait(1);

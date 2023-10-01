@@ -1,19 +1,14 @@
-const url = "https://mocki.io/v1/cec57aeb-4eeb-45ae-98a3-9478f144faa7";
+const url =
+  // "http://api.aviationstack.com/v1/flights?access_key=ae0f9a0a4e373646e027290f3609cc89&airline_iata=IB&flight_number=3009";
+  "https://mocki.io/v1/b0175427-e367-4995-9104-7d910e117c1d";
 
-const flightrequest = Functions.makeHttpRequest({
+const response = Functions.makeHttpRequest({
   url: url,
-});
-
-const flightResponse = await flightrequest;
-
-if (flightResponse.error) {
-  throw Error("Request failedd");
-}
-
-const latestFlightData = flightResponse.data;
+}).then((res) => res.data.data[0]);
 
 const flightData = {
-  flightCode: latestFlightData.flight.iata,
+  flightCode: response.flight.iata,
+  delayOnArrival: response.arrival.delay,
 };
 
 return Functions.encodeString(JSON.stringify(flightData));

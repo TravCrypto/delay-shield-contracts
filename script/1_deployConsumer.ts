@@ -2,13 +2,15 @@ import { abi, bytecode } from "../out/DelayShield.sol/DelayShield.json";
 import { wallet, signer } from "./helpers/connection";
 import { ContractFactory, encodeBytes32String } from "ethers";
 
-const routerAddress = "0x6E2dc0F9DB014aE19888F539E59285D2Ea04244C";
-const donIdBytes32 = encodeBytes32String("fun-polygon-mumbai-1");
+const routerAddress = "0xb83E47C2bC239B3bf370bc41e1459A34b41238D0";
+const donIdBytes32 = encodeBytes32String("fun-ethereum-sepolia-1");
 
 const deployedFunctionsConsumerContract = async () => {
   const contractFactory = new ContractFactory(abi, bytecode, wallet);
 
-  console.log(`\nDeploying functions consumer contract on Polygon Mumbai'...`);
+  console.log(
+    `\nDeploying functions consumer contract on Ethereum Sepolia'...`
+  );
   const functionsConsumerContract = await contractFactory
     .connect(signer)
     .deploy(routerAddress, donIdBytes32);
