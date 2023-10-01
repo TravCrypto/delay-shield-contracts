@@ -34,5 +34,5 @@ const finalResult =
   isFlightInsured && isInsurancePeriodValid && isDelayRelevant;
 
 return Functions.encodeString(
-  `${insuranceFlightCode}-${flightData.code}-${flightData.scheduledDeparture}-${insuranceBuyTime}`
+  `${isFlightInsured}-${isInsurancePeriodValid}-${isDelayRelevant}`
 );
